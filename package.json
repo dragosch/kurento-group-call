@@ -1,0 +1,47 @@
+{
+  "name": "kurento-group-call",
+  "version": "5.1.1-dev",
+  "description": "Simple library used to initiatiote a group call using Kurento Media Server",
+  "main": "lib/server.js",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd example/static && bower install",
+    "start": "node_modules/.bin/supervisor app",
+    "test": "node_modules/.bin/mocha -w backend/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dragosch/kurento-group-call.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/dragosch/kurento-group-call/blob/master/LICENSE"
+    }
+  ],
+  "dependencies": {
+    "async": "~0.9.0",
+    "express": "~3.2.6",
+    "minimist": "^1.1.0",
+    "ws": "~0.4.32",
+    "kurento-client": "5.1.0",
+    "waitfor": "^0.1.3"
+  },
+  "devDependencies": {
+    "bower": "^1.3.12",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "~3.7.0",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-githooks": "^0.3.1",
+    "grunt-jsbeautifier": "^0.2.10",
+    "grunt-jscoverage": "^0.1.3",
+    "grunt-jsdoc": "^0.6.3",
+    "grunt-npm2bower-sync": "^0.8.1",
+    "grunt-shell": "^1.1.2",
+    "qunitjs": "^1.18.0",
+    "mocha": "^2.2.5",
+    "should": "^6.0.3"
+  }
+}
