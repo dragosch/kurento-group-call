@@ -3,11 +3,11 @@
   "version": "5.1.1-dev",
   "description": "Simple library used to initiatiote a group call using Kurento Media Server",
   "main": "lib/server.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "postinstall": "cd example/static && bower install",
-    "start": "node_modules/.bin/supervisor app",
-    "test": "node_modules/.bin/mocha -w backend/test"
+    "start": "supervisor app",
+    "test": "mocha -w backend/test"
   },
   "repository": {
     "type": "git",
@@ -43,5 +43,17 @@
     "qunitjs": "^1.18.0",
     "mocha": "^2.2.5",
     "should": "^6.0.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/dragosch/kurento-group-call/issues"
+  },
+  "homepage": "https://github.com/dragosch/kurento-group-call",
+  "directories": {
+    "example": "example"
+  },
+  "keywords": [
+    "kurento"
+  ],
+  "author": "Alexander Dragosch <alexander.dragosch@googlemail.com>",
+  "license": "MIT"
 }
