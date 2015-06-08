@@ -1,7 +1,7 @@
 {
   "name": "kurento-group-call",
   "version": "5.1.1-dev2",
-  "description": "Simple library used to initiatiote a group call using Kurento Media Server",
+  "description": "Simple javascript library used to inititiote a group call using Kurento Media Server",
   "main": "lib/server.js",
   "private": false,
   "scripts": {
@@ -52,7 +52,7 @@
     "example": "example"
   },
   "keywords": [
-    "kurento"
+    "Kurento", "WebRTC", "video", "audio"
   ],
   "author": "Alexander Dragosch <alexander.dragosch@googlemail.com>",
   "license": "MIT"
