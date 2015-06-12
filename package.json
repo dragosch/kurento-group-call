@@ -1,6 +1,6 @@
 {
   "name": "kurento-group-call",
-  "version": "5.1.1-dev2",
+  "version": "5.1.1-dev3",
   "description": "Simple javascript library used to initiate a group call (many to many video and audio call) using Kurento Media Server",
   "main": "lib/server.js",
   "private": false,
@@ -42,6 +42,7 @@
     "grunt-shell": "^1.1.2",
     "qunitjs": "^1.18.0",
     "mocha": "^2.2.5",
+    "shortid": "^2.2.2",
     "should": "^6.0.3"
   },
   "bugs": {
