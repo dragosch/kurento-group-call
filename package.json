@@ -1,13 +1,11 @@
 {
   "name": "kurento-group-call",
-  "version": "5.1.1-dev3",
+  "version": "5.1.1-dev5",
   "description": "Simple javascript library used to initiate a group call (many to many video and audio call) using Kurento Media Server",
   "main": "lib/server.js",
   "private": false,
   "scripts": {
-    "postinstall": "cd example/static && bower install",
-    "start": "supervisor app",
-    "test": "mocha -w backend/test"
+    "test": "mocha -w lib/backend/test"
   },
   "repository": {
     "type": "git",
@@ -21,10 +19,8 @@
   ],
   "dependencies": {
     "async": "~0.9.0",
-    "express": "~3.2.6",
-    "minimist": "^1.1.0",
-    "socket.io": "^1.3.5",
     "kurento-client": "5.1.0",
+    "shortid": "^2.2.2",
     "waitfor": "^0.1.3"
   },
   "devDependencies": {
@@ -42,7 +38,6 @@
     "grunt-shell": "^1.1.2",
     "qunitjs": "^1.18.0",
     "mocha": "^2.2.5",
-    "shortid": "^2.2.2",
     "should": "^6.0.3"
   },
   "bugs": {
