@@ -14,7 +14,7 @@ concepts behind
 # Internals
 
 ## Communication / Activity Diagram
-![Overview Messages](/docs/overview_messages.jpg?raw=true "Activity Diagram")
+![Overview Messages](/docs/overview_messages.png?raw=true "Activity Diagram")
 
 Installation
 ===
