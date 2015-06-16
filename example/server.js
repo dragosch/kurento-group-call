@@ -25,13 +25,17 @@
 
 'use strict';
 
-var kurentoGroupCall = require('../lib/server.js');
+//mkdir node_modules/kurento-group-call && cp * node_modules/kurento-group-call && cp -r lib/ node_modules/kurento-group-call
+var kurentoGroupCall = require('kurento-group-call');
 
 var path = require('path');
 var express = require('express');
-var MemoryStore = express.session.MemoryStore;
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var MemoryStore = session.MemoryStore;
 var minimist = require('minimist');
 var url = require('url');
+
 
 var argv = minimist(process.argv.slice(2), {
   default: {
@@ -44,16 +48,62 @@ var argv = minimist(process.argv.slice(2), {
 
 var app = express();
 
-var parseCookie = express.cookieParser();
+var parseCookie = cookieParser();
 var store = new MemoryStore();
-app.configure(function () {
-  app.use(parseCookie);
-  app.use(express.session({
+
+app.use(parseCookie);
+app.use(session({
     store: store,
     secret: '123456',
     key: 'sid'
-  }));
-});
+    })
+  );
+
+
+
+function initWebRtc(socket){
+  var sessionId = socket.id;
+  console.log('initWebRtc: sessionId=', sessionId );
+  var sendMessage = function( messageName, data ) {
+    socket.emit(messageName, data);
+  };
+  kurentoGroupCall.start('ws://52.17.163.149:8888/kurento', sessionId,
+      sendMessage);
+  socket.on('error', function(error){
+    kurentoGroupCall.onError(error, sessionId);
+  });
+  socket.on('close', function(){
+    kurentoGroupCall.onClose(sessionId);
+  });
+  socket.on('incomingCallAnswer', function(data){
+    kurentoGroupCall.onIncomingCallAnswer(data, sessionId, sendMessage);
+  });
+  socket.on('message', function(data){
+    kurentoGroupCall.onMessage(data, sessionId, sendMessage);
+  });
+  socket.on('inviteUsers', function(data){
+    console.log('inviteUsers: ', data.userIds);
+
+    var currentUserId = socket.client.user._id;
+    console.log('inviteUsers: currentUserId=', currentUserId, ' socketId=', socket.id);
+    var length = data.userIds.length;
+    for (var i = 0; i < length; i++) {
+      var userId = data.userIds[i];
+      var socks = authenticatedSockets[userId];
+      if (socks) {
+        console.log('inviteUsers: send incomingCall message', socks[0].id);
+        socks[0].emit('incomingCall', { from: currentUserId, callId: data.callId } );
+      } else {
+        console.log('ERROR user not connected: userId=', userId);
+      }
+    }
+  });
+};
+
+
+var initWebSockets = function(server) {
+  console.log('initWebSockets:');
+};
 
 /*
  * Server startup
@@ -64,8 +114,16 @@ var server = app.listen(port, function () {
   console.log('Kurento Tutorial started');
   console.log('Open ' + url.format(asUrl) +
     ' with a WebRTC capable browser');
-  kurentoGroupCall.start(server, argv.ws_uri, store, parseCookie);
 });
+var io = require('socket.io').listen(server);
+
+
+io.on('connection', function (socket) {
+  console.log('CONNECT');
+  initWebRtc(socket);
+});
+
+
 
 
 app.use(express.static(path.join(__dirname, 'static')));
