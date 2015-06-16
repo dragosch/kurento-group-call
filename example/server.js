@@ -35,6 +35,7 @@ var cookieParser = require('cookie-parser');
 var MemoryStore = session.MemoryStore;
 var minimist = require('minimist');
 var url = require('url');
+var authenticatedSockets = {};
 
 
 var argv = minimist(process.argv.slice(2), {
@@ -59,7 +60,15 @@ app.use(session({
     })
   );
 
-
+app.get('/users', function (req, res) {
+  var userIds = [];
+  for (var key in authenticatedSockets) {
+    if (authenticatedSockets.hasOwnProperty(key)) {
+      userIds.push(key);
+    }
+  }
+  res.send(userIds);
+});
 
 function initWebRtc(socket){
   var sessionId = socket.id;
@@ -84,15 +93,15 @@ function initWebRtc(socket){
   socket.on('inviteUsers', function(data){
     console.log('inviteUsers: ', data.userIds);
 
-    var currentUserId = socket.client.user._id;
+    var currentUserId = socket.id;
     console.log('inviteUsers: currentUserId=', currentUserId, ' socketId=', socket.id);
     var length = data.userIds.length;
     for (var i = 0; i < length; i++) {
       var userId = data.userIds[i];
       var socks = authenticatedSockets[userId];
       if (socks) {
-        console.log('inviteUsers: send incomingCall message', socks[0].id);
-        socks[0].emit('incomingCall', { from: currentUserId, callId: data.callId } );
+        console.log('inviteUsers: send incomingCall message', socks.id);
+        socks.emit('incomingCall', { from: currentUserId, callId: data.callId } );
       } else {
         console.log('ERROR user not connected: userId=', userId);
       }
@@ -120,7 +129,13 @@ var io = require('socket.io').listen(server);
 
 io.on('connection', function (socket) {
   console.log('CONNECT');
+  authenticatedSockets[socket.id] = socket;
   initWebRtc(socket);
+
+  socket.on('disconnect', function () {
+    console.log('CLOSE');
+    delete authenticatedSockets[socket.id];
+  });
 });
 
 

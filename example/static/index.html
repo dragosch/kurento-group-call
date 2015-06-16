@@ -1,35 +1,24 @@
 <html>
 <head>
 <meta charset="utf-8">
-<link rel="styleSheet" href="style.css" type="text/css" media="screen">
 
+<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="bower_components/adapter.js/adapter.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="./js/conferenceroom.js"></script>
 <script src="./js/participant.js"></script>
 <script src="bower_components/kurento-utils/js/kurento-utils.js"></script>
+
 </head>
 <body>
-    <div id="container">
-        <div id="wrapper">
+  <div id="container">
+        <div id="wrapper" class="row text-center">
             <div id="join" class="animate join">
                 <h1>Join a Room</h1>
-
-                <form onsubmit="register(); return false;" accept-charset="UTF-8">
-                <!--
-                    <p>
-                        <input type="text" name="name" value="" id="name"
-                            placeholder="Username" required>
-                    </p>
-                    <p>
-                        <input type="text" name="room" value="" id="roomName"
-                            placeholder="Room" required>
-                    </p>
--->
                     <p class="submit">
-                        <input type="submit" name="commit" value="Join!">
+                        <input type="submit" name="commit" value="Start New Call !" onclick="startNewCall()">
                     </p>
-                </form>
             </div>
             <div id="room" style="display: none;">
                 <h2 id="room-header"></h2>
@@ -38,6 +27,37 @@
                     value="Leave room">
             </div>
         </div>
+  </div>
+
+  <div id="acceptcall" class="modal" role="dialog">
+    <div class="modal-dialog modal-sm" >
+      <div class="modal-header">
+        <h3>Accept call ?</h3>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="acceptCall()">Accept</button>
+        <button class="btn btn-warning" onclick="rejectCall()">Reject</button>
+      </div>
+    </div>  
+  </div>
+    
+  <div id="inviteusers" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+      <div class="modal-header">
+        <h3>Invite Users to join the call</h3>
+      </div>
+      <div class="modal-body" id="userlist">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="inviteUsers()">Invite & Close</button>
+        <button class="btn btn-warning" onclick="hideInviteUsersDialog()">Close</button>
+      </div>
+      </div>
     </div>
+  </div>
+
 </body>
 </html>
