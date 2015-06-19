@@ -1,6 +1,6 @@
 {
   "name": "kurento-group-call",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple javascript library used to initiate a group call (many to many video and audio call) using Kurento Media Server",
   "main": "lib/server.js",
   "private": false,
