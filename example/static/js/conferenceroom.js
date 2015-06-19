@@ -86,7 +86,7 @@ startNewCall = function () {
     id: 'startNewCall',
     userId: currentUserId
   };
-  sendMessage(message);
+  sendMessage('startNewCall', message);
 };
 
 showAcceptCallDialog = function() {

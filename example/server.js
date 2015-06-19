@@ -83,8 +83,14 @@ function initWebRtc(socket){
   socket.on('close', function(){
     kurentoGroupCall.onClose(sessionId);
   });
+  socket.on('startNewCall', function(data){
+    kurentoGroupCall.onStartNewCall(data, sessionId, sendMessage);
+  });
   socket.on('incomingCallAnswer', function(data){
     kurentoGroupCall.onIncomingCallAnswer(data, sessionId, sendMessage);
+  });
+  socket.on('receiveVideoFrom', function(data){
+    kurentoGroupCall.onReceiveVideoFrom(data, sessionId);
   });
   socket.on('message', function(data){
     kurentoGroupCall.onMessage(data, sessionId, sendMessage);

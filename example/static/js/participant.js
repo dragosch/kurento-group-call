@@ -76,7 +76,7 @@ function Participant(name) {
 				sender : name,
 				sdpOffer : offerSdp
 			};
-		sendMessage(msg);
+		sendMessage('receiveVideoFrom', msg);
 	}
 
 	Object.defineProperty(this, 'rtcPeer', { writable: true});
