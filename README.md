@@ -19,7 +19,7 @@ concepts behind
 Installation
 ===
 
-You can install this nodejs library using npn (https://www.npmjs.com/package/kurento-group-call).
+You can install this nodejs library using npm (https://www.npmjs.com/package/kurento-group-call).
 
 For starting the example:
 ```
